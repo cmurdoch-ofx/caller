@@ -1,26 +1,24 @@
 import json
 import os
 
-
 def main():
-
-    missing_config = "File 'principle_engineers_data.csv' is not listed in the filename_to_value dictionary. Skipping."
-
+    missing_config = "file 'PE_data.csv' is not listed in config mapping, Skipping"
     json_data = [{
-            "team": "SRE",
-            "template": "default",
-            "summary": "Team tag config missing for Deprecating Lambdas job",
-            "description": missing_config
+        "team": "SRE",
+        "template": "default",
+        "summary": "No config",
+        "description": missing_config
     }]
-
     json_string = json.dumps(json_data)
 
-    with open(os.environ['GITHUB_ENV'], 'a') as fh:
-        print(f'JSON_INPUT={json_string}', file=fh)
+    # Path to the GitHub Environment file (typically provided by GitHub Actions)
+    github_env = os.getenv('GITHUB_ENV')
 
-    print('Environment variable JSON_INPUT set to')
-    print(os.environ['JSON_INPUT'])
-
+    if github_env is not None:
+        with open(github_env, 'a') as env_file:
+            env_file.write(f"JSON_INPUT={json_string}\n")
+    else:
+        print("GITHUB_ENV not found. Ensure this script is running within a GitHub Actions environment.")
 
 if __name__ == "__main__":
     main()
