@@ -13,6 +13,6 @@ jobs:
       - name: generate json to env
         run: python scripts/main.py
       - name: check ENV variable
-        run: echo $JSON_INPUT
+        run: echo "$JSON_INPUT"
         env:
           JSON_INPUT: ${{ env.JSON_INPUT }}

@@ -15,7 +15,8 @@ def main():
 
     json_string = json.dumps(json_data)
 
-    os.environ['JSON_INPUT'] = json_string
+    with open(os.environ['GITHUB_ENV'], 'a') as fh:
+        print(f'JSON_INPUT={json_string}', file=fh)
 
     print('Environment variable JSON_INPUT set to')
     print(os.environ['JSON_INPUT'])
