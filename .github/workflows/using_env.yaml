@@ -1,0 +1,16 @@
+name: Using ENV as inputs
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  generate-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      - name: generate json to env
+        run: python scripts/main.py
+      - name: check ENV variable
+        run: echo $JSON_INPUT
