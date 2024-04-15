@@ -16,3 +16,9 @@ jobs:
         run: echo "$JSON_INPUT"
         env:
           JSON_INPUT: ${{ env.JSON_INPUT }}
+      - name: call custom action with inputs
+        uses: cmurdoch-ofx/called/scripts@main
+        with:
+          json-input: ${{ env.JSON_INPUT }}
+          secret-token: ${{ secrets.SECRET_TOKEN }}
+          secret-user: ${{ secrets.SECRET_USER }}
