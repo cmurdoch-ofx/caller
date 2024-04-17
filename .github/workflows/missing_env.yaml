@@ -1,0 +1,36 @@
+name: Missing ENV value first
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-json:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: checkout repo
+        uses: actions/checkout@v4
+        
+      - name: call custom action with inputs
+        uses: cmurdoch-ofx/called/scripts@main
+        if: ${{ env.JSON_INPUT != '' }}
+        with:
+          json-input: ${{ env.JSON_INPUT }}
+          secret-token: ${{ secrets.SECRET_TOKEN }}
+          secret-user: ${{ secrets.SECRET_USER }}
+        
+      - name: generate json to env
+        run: python scripts/main.py
+      
+      - name: check ENV variable
+        run: echo "$JSON_INPUT"
+        env:
+          JSON_INPUT: ${{ env.JSON_INPUT }}
+      
+      - name: call custom action with inputs
+        uses: cmurdoch-ofx/called/scripts@main
+        if: ${{ env.JSON_INPUT != '' }}
+        with:
+          json-input: ${{ env.JSON_INPUT }}
+          secret-token: ${{ secrets.SECRET_TOKEN }}
+          secret-user: ${{ secrets.SECRET_USER }}
