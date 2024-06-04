@@ -2,7 +2,6 @@ name: Using ENV as inputs
 
 on:
   workflow_dispatch:
-  push:
 
 jobs:
   generate-json:
